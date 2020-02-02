@@ -24,12 +24,18 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.tapadoo.alerter.Alerter;
 
 import java.util.ArrayList;
+
+import es.dmoral.toasty.Toasty;
 
 
 public class MainActivity extends AppCompatActivity
@@ -41,6 +47,8 @@ public class MainActivity extends AppCompatActivity
     private AudioManager audioManager;
 
     private final String SHARED_PREFS = "MY_PREFS";
+
+    private long backPressedTime;
 
     boolean isMusicActive = true;
 
@@ -350,7 +358,7 @@ public class MainActivity extends AppCompatActivity
                 Alerter.create(MainActivity.this)
                         .setTitle("Prank boshlanmoqda")
                         .setText("Telefoningizni yaqinlaringizga bering...")
-                        .setBackgroundColorInt(Color.parseColor("#002E63")) // or setBackgroundColorInt(Color.CYAN)
+                        .setBackgroundColorInt(Color.parseColor("#A40000")) // or setBackgroundColorInt(Color.CYAN)
                         .setIcon(R.drawable.phone)//if you don't write this line of code there will be icon of the bell
                         .show();
 
@@ -359,7 +367,11 @@ public class MainActivity extends AppCompatActivity
                     public void onTick(long millisUntilFinished) {
                         countStart--;
                         startCountView.setText(String.valueOf(countStart));
-                        startCountView.animate().alpha(1).setDuration(500);
+
+                        YoYo.with(Techniques.ZoomIn)
+                                .duration(1000)
+                                .playOn(startCountView);
+                       // startCountView.animate().alpha(1).setDuration(500);
                     }
                     @Override
                     public void onFinish() {
@@ -387,8 +399,19 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        MainActivity.this.finish();
-        bgMusic.release();
+        if(backPressedTime + 2500 > System.currentTimeMillis()){
+            MainActivity.this.finish();
+            bgMusic.release();
+        }
+        else {
+//            Toasty.normal(MainActivity.this,"Chiqish uchun yana bir marta bosing!",
+//                    Toast.LENGTH_SHORT, ContextCompat.getDrawable
+//                            (MainActivity.this,R.drawable.exit)).show();
+            Toasty.warning(MainActivity.this,"Chiqish uchun yana bir marta bosing!",
+                    Toast.LENGTH_SHORT).show();
+        }
+
+        backPressedTime = System.currentTimeMillis();
     }
 }
 
