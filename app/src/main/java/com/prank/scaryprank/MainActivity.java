@@ -1,9 +1,16 @@
 package com.prank.scaryprank;
 
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -11,27 +18,53 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.tapadoo.alerter.Alerter;
+
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+
+public class MainActivity extends AppCompatActivity
+        implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     Spinner mySpinner;
-    RelativeLayout mainLayout;
+    RelativeLayout mainLayout, mainLayout2;
     private MediaPlayer bgMusic;
+    private AudioManager audioManager;
 
     private final String SHARED_PREFS = "MY_PREFS";
 
     boolean isMusicActive = true;
 
-    private Button prevBtn,nextBtn,playBtn;
+    private Button prevBtn, nextBtn, playBtn;
     private ImageView horror_img;
+    private TextView startCountView;
+
+    private CountDownTimer countDownTimer;
+
+    int[] horror_images = {
+            R.drawable.horror,
+            R.drawable.horror2,
+            R.drawable.horror3,
+            R.drawable.horror_4,
+            R.drawable.horror_5,
+            R.drawable.horror_6,
+            R.drawable.horror7
+    };
+
+    int image_counter = 0;
+
+    int countStart = 4;
+
+    int timer = 10000; //10 seconds default
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,33 +76,40 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         initViews(); //Initialize views
 
+        initListeners();
+
         getSettings();
 
+        horror_img.setImageResource(horror_images[image_counter]);
 
-        if(isMusicActive){
+        startCountView.setAlpha(0);
+
+        if (isMusicActive) { //If user enabled background music from settings then it will play
             startBgMusic();
         }
 
-
         initArrayList(); //Initialize array list for spinner
 
+    }
 
+    private void initListeners() {
+        prevBtn.setOnClickListener(this);
+        nextBtn.setOnClickListener(this);
+        playBtn.setOnClickListener(this);
     }
 
     private void getSettings() {
         SharedPreferences preferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
 
-        if(preferences.contains("bg_music")){
-            isMusicActive = preferences.getBoolean("bg_music",true);
-            Log.d("shared","topildi");
-        }
-        else{
-            Log.d("shared","topilmadi");
+        if (preferences.contains("bg_music")) {
+            isMusicActive = preferences.getBoolean("bg_music", true);
+            Log.d("shared", "topildi");
+        } else {
+            Log.d("shared", "topilmadi");
         }
     }
 
     private void startBgMusic() {
-        bgMusic = MediaPlayer.create(MainActivity.this,R.raw.horror_bg);
         bgMusic.start();
     }
 
@@ -84,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         customList.add(new CustomItems("2 daqiqa"));
         CustomAdapter customAdapter = new CustomAdapter(MainActivity.this, customList);
 
-        if(mySpinner != null){
+        if (mySpinner != null) {
             mySpinner.setAdapter(customAdapter);
             mySpinner.setOnItemSelectedListener(this);
         }
@@ -93,21 +133,35 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private void initViews() {
         mySpinner = findViewById(R.id.spinner1);
         mainLayout = findViewById(R.id.mainLayout);
+        mainLayout2 = findViewById(R.id.mainLayout2);
         horror_img = findViewById(R.id.horror_view);
         prevBtn = findViewById(R.id.prevBtn);
         nextBtn = findViewById(R.id.nextBtn);
         playBtn = findViewById(R.id.playBtn);
+        startCountView = findViewById(R.id.startCount);
+
+        bgMusic = MediaPlayer.create(MainActivity.this, R.raw.horror_bg);
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        CustomItems items = (CustomItems)parent.getSelectedItem();
-        Toast.makeText(MainActivity.this,items.getSpinnerText(),Toast.LENGTH_SHORT).show();
+        CustomItems items = (CustomItems) parent.getSelectedItem();
+        String str = items.getSpinnerText();
+        String numberOnly = str.replaceAll("[^0-9]", "");
+        timer = Integer.parseInt(numberOnly);
+        if (timer == 1) { //choosen 1 minute
+            timer = 60000; //60 seconds
+        } else if (timer == 2) { //choosen 2 minute
+            timer = 120000; //120 seconds
+        } else {
+            timer *= 1000; //if choosen 10 seconds then 10 * 1000 = 10000
+        }
+        //Toast.makeText(getApplicationContext(),String.valueOf(timer),Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
+        timer = 10000;
     }
 
     public void showInfo(View view) {
@@ -138,6 +192,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void showSettings(View view) {
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
+
         mainLayout.setAlpha(0.7f);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -147,6 +203,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Button okBtn = mView.findViewById(R.id.saveBtn);
 
         final Switch bgSwitch = mView.findViewById(R.id.switchBgMusic);
+        final SeekBar volumeSeekbar = mView.findViewById(R.id.seekbarVolume);
+        LinearLayout shareApp = mView.findViewById(R.id.shareBtn);
+        LinearLayout rateApp = mView.findViewById(R.id.rate);
+
+        //Volume Button
+        initControls(volumeSeekbar);
 
         bgSwitch.setChecked(isMusicActive);
 
@@ -169,13 +231,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             @Override
             public void onClick(View view) {
                 //Switch button
-                if(bgSwitch.isChecked()){
+                if (bgSwitch.isChecked()) {
+                    if (!bgMusic.isPlaying()) {
+                        bgMusic.start();
+                    }
                     isMusicActive = true;
-                }
-                else{
+                } else {
                     isMusicActive = false;
+                    if (bgMusic.isPlaying()) {
+                        bgMusic.pause();
+                    }
                 }
-                SharedPreferences preferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+                SharedPreferences preferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putBoolean("bg_music", isMusicActive);
                 editor.apply();
@@ -185,10 +252,145 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         });
 
+        shareApp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Share Button
+                shareLink();
+            }
+        });
+
+        rateApp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("market://details?id=" + getPackageName())));
+                } catch (ActivityNotFoundException e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("https://play.google.com/store/apps/details?id=" + getPackageName())));
+                }
+            }
+        });
 
         dialog.show();
+    }
 
+    private void shareLink() {
+        String URL = "https://play.google.com/store/apps/details?id=" + getPackageName();
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_TITLE, "Dasturni yuborish");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, URL);
+        shareIntent.setType("text/plain");
+        startActivity(shareIntent);
+    }
 
+    private void initControls(SeekBar seekbar) {
+        try {
+            audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+            assert audioManager != null;
+            seekbar.setMax(audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
+            seekbar.setProgress(audioManager.getStreamVolume(AudioManager.STREAM_MUSIC));
+            seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
+                }
 
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.prevBtn:
+                --image_counter;
+                if (image_counter == -1) {
+                    image_counter = horror_images.length - 1;
+                }
+                horror_img.setImageResource(horror_images[image_counter]);
+                break;
+
+            case R.id.nextBtn:
+                image_counter++;
+                if (image_counter == horror_images.length) {
+                    image_counter = 0;
+                }
+                horror_img.setImageResource(horror_images[image_counter]);
+                break;
+
+            case R.id.playBtn:
+                if(bgMusic.isPlaying()){
+                    bgMusic.release();
+                }
+
+                MediaPlayer doorFx = MediaPlayer.create(MainActivity.this,R.raw.door);
+                if(isMusicActive){
+                    doorFx.start();
+                }
+
+                mainLayout2.setAlpha(0.3f);
+
+                final Intent intent = new Intent(MainActivity.this, scaryActivity.class);
+                intent.putExtra("image", image_counter);
+
+                Alerter.create(MainActivity.this)
+                        .setTitle("Prank boshlanmoqda")
+                        .setText("Telefoningizni yaqinlaringizga bering...")
+                        .setBackgroundColorInt(Color.parseColor("#002E63")) // or setBackgroundColorInt(Color.CYAN)
+                        .setIcon(R.drawable.phone)//if you don't write this line of code there will be icon of the bell
+                        .show();
+
+                CountDownTimer startTimer = new CountDownTimer(4500,1000) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        countStart--;
+                        startCountView.setText(String.valueOf(countStart));
+                        startCountView.animate().alpha(1).setDuration(500);
+                    }
+                    @Override
+                    public void onFinish() {
+
+                        countDownTimer = new CountDownTimer(timer, 1000) {
+                            @Override
+                            public void onTick(long millisUntilFinished) {
+                            }
+
+                            @Override
+                            public void onFinish() {
+                                startActivity(intent);
+                                //Toasty.success(MainActivity.this, "DONE", Toast.LENGTH_SHORT).show();
+                            }
+                        };
+                        countDownTimer.start();
+
+                        countStart = 4;
+                        MainActivity.super.onBackPressed();
+                    }
+                }; startTimer.start();
+                break;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        MainActivity.this.finish();
+        bgMusic.release();
     }
 }
+
+
+

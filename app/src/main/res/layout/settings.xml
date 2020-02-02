@@ -95,6 +95,7 @@
             android:paddingBottom="10dip"
             />
         <LinearLayout
+            android:id="@+id/shareBtn"
             android:orientation="vertical"
             android:background="#21586B"
             android:layout_width="match_parent"
@@ -123,7 +124,6 @@
                     />
 
                 <TextView
-                    android:id="@+id/share"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -132,12 +132,62 @@
                     />
             </LinearLayout>
         </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:background="#000000"
+            android:paddingBottom="10dip"
+            />
+
+        <LinearLayout
+            android:id="@+id/rate"
+            android:orientation="vertical"
+            android:background="#21586B"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                >
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_star_black_24dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="DASTURNI BAHOLASH"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="#fff"
+                    android:fontFamily="@font/horror_font"
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+
         <View
             android:layout_width="fill_parent"
             android:layout_height="3dip"
             android:background="#000000"
             android:paddingBottom="10dip"
             />
+
+
 
         <LinearLayout
             android:orientation="vertical"
