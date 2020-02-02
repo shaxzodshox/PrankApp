@@ -371,7 +371,6 @@ public class MainActivity extends AppCompatActivity
                         YoYo.with(Techniques.ZoomIn)
                                 .duration(1000)
                                 .playOn(startCountView);
-                       // startCountView.animate().alpha(1).setDuration(500);
                     }
                     @Override
                     public void onFinish() {

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "15983375733",
+    "firebase_url": "https://scaryprank-cc17e.firebaseio.com",
+    "project_id": "scaryprank-cc17e",
+    "storage_bucket": "scaryprank-cc17e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:15983375733:android:3ebc74887bfb9ff1c28f3c",
+        "android_client_info": {
+          "package_name": "com.prank.scaryprank"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "15983375733-mh2penspet3m6lscn5e32ntfq2accknl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.prank.scaryprank",
+            "certificate_hash": "fcdfd1cf08faea00a5836dfdd2683a7ac47db4e5"
+          }
+        },
+        {
+          "client_id": "15983375733-ea6c2bnqpma9dea8ft9pq7pdd39mbn19.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7YGNFJQJHy4_5TL4hSxSEH41VS4u2Lko"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "15983375733-ea6c2bnqpma9dea8ft9pq7pdd39mbn19.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
