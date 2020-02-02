@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    >
+    <TextView
+        android:id="@+id/tvCustomSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:text="Item1"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:fontFamily="@font/blood2"
+        android:background="#36454F"
+        android:textAlignment="center"
+        />
+
+        <View
+            android:background="#fff"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:paddingBottom="1dp"
+            />
+
+</LinearLayout>

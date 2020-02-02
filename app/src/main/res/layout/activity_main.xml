@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    android:orientation="vertical"
+    android:id="@+id/mainLayout"
+    tools:context=".MainActivity">
+
+<TextView
+    android:id="@+id/title"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="#bb0a1e"
+    android:fontFamily="@font/nightmare"
+    android:layout_centerHorizontal="true"
+    android:textSize="@dimen/textSize"
+    android:text="AJOYIB PRANK"
+    android:layout_marginTop="12dp"
+    android:padding="8dp"
+    />
+
+    <TextView
+        android:id="@+id/rasmTanlang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:fontFamily="@font/dark"
+        android:textSize="24sp"
+        android:layout_centerHorizontal="true"
+        android:text="RASM TANLANG"
+        android:layout_below="@id/title"
+        />
+
+    <LinearLayout
+        android:id="@+id/imageContent"
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:layout_below="@id/rasmTanlang"
+        android:layout_marginTop="12dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/prevBtn"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/left_click"
+            android:layout_marginEnd="16dp"
+            />
+
+        <ImageView
+            android:id="@+id/horror_view"
+            android:background="@drawable/border"
+            android:layout_width="170dp"
+            android:cropToPadding="true"
+            android:layout_height="match_parent"
+            android:src="@drawable/horror"
+            android:scaleType="centerCrop"
+            />
+
+        <Button
+            android:id="@+id/nextBtn"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/right_click"
+            android:layout_marginStart="16dp"
+            />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/vaqtTanlang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:fontFamily="@font/dark"
+        android:textSize="24sp"
+        android:layout_centerHorizontal="true"
+        android:text="VAQTNI TANLANG"
+        android:layout_below="@id/imageContent"
+        android:layout_marginTop="8dp"
+        />
+
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@null"
+        android:layout_below="@id/vaqtTanlang"
+        />
+
+    <LinearLayout
+        android:id="@+id/btnContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinner1"
+        android:orientation="horizontal"
+        android:layout_margin="16dp"
+
+        >
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableStart="@drawable/ic_warning_black_24dp"
+        android:fontFamily="@font/nightmare"
+        android:text="OGOHLANTIRISH"
+        android:onClick="showInfo"
+        android:textSize="18sp" />
+
+               <Button
+                   android:id="@+id/playBtn"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_weight="1"
+                   android:drawableEnd="@drawable/ic_play_circle_filled_black_24dp"
+                   android:fontFamily="@font/nightmare"
+                   android:textColor="#cc3300"
+                   android:textSize="18sp"
+                   android:text="BOSHLASH" />
+
+
+    </LinearLayout>
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="SMART_BANNER"
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+    </com.google.android.gms.ads.AdView>
+
+</RelativeLayout>
