@@ -1,20 +1,22 @@
 package com.prank.scaryprank;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
@@ -23,6 +25,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     Spinner mySpinner;
     RelativeLayout mainLayout;
     private MediaPlayer bgMusic;
+
+    private final String SHARED_PREFS = "MY_PREFS";
+
+    boolean isMusicActive = true;
 
     private Button prevBtn,nextBtn,playBtn;
     private ImageView horror_img;
@@ -35,17 +41,36 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
-        startBgMusic();
-
         initViews(); //Initialize views
+
+        getSettings();
+
+
+        if(isMusicActive){
+            startBgMusic();
+        }
+
 
         initArrayList(); //Initialize array list for spinner
 
 
     }
 
-    private void startBgMusic() {
+    private void getSettings() {
+        SharedPreferences preferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
 
+        if(preferences.contains("bg_music")){
+            isMusicActive = preferences.getBoolean("bg_music",true);
+            Log.d("shared","topildi");
+        }
+        else{
+            Log.d("shared","topilmadi");
+        }
+    }
+
+    private void startBgMusic() {
+        bgMusic = MediaPlayer.create(MainActivity.this,R.raw.horror_bg);
+        bgMusic.start();
     }
 
     private void initArrayList() {
@@ -86,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void showInfo(View view) {
-        mainLayout.animate().alpha(0.5f);
+        mainLayout.setAlpha(0.5f);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         View mView = getLayoutInflater().inflate(R.layout.ogohlantirish, null);
@@ -99,14 +124,71 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         final AlertDialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
 
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainLayout.animate().alpha(1).setDuration(100);
+                mainLayout.setAlpha(1);
                 dialog.dismiss();
             }
         });
         dialog.show();
+
+    }
+
+    public void showSettings(View view) {
+        mainLayout.setAlpha(0.7f);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        View mView = getLayoutInflater().inflate(R.layout.settings, null);
+
+        Button cancelBtn = mView.findViewById(R.id.cancelBtn);
+        Button okBtn = mView.findViewById(R.id.saveBtn);
+
+        final Switch bgSwitch = mView.findViewById(R.id.switchBgMusic);
+
+        bgSwitch.setChecked(isMusicActive);
+
+        builder.setView(mView);
+
+        final AlertDialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
+
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainLayout.setAlpha(1);
+                dialog.dismiss();
+            }
+        });
+
+        okBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Switch button
+                if(bgSwitch.isChecked()){
+                    isMusicActive = true;
+                }
+                else{
+                    isMusicActive = false;
+                }
+                SharedPreferences preferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putBoolean("bg_music", isMusicActive);
+                editor.apply();
+
+                mainLayout.setAlpha(1);
+                dialog.dismiss();
+            }
+        });
+
+
+        dialog.show();
+
+
 
     }
 }
