@@ -30,8 +30,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.tapadoo.alerter.Alerter;
 
 import java.util.ArrayList;
@@ -57,6 +59,8 @@ public class MainActivity extends AppCompatActivity
     private Button prevBtn, nextBtn, playBtn;
     private ImageView horror_img;
     private TextView startCountView;
+    //AdMob ads
+    InterstitialAd mInterstitialAd;
 
     private CountDownTimer countDownTimer;
 
@@ -85,6 +89,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         initViews(); //Initialize views
+
+        showAd(); //show Interstitial Ad
 
         initListeners();
 
@@ -466,6 +472,20 @@ public class MainActivity extends AppCompatActivity
         }
 
         backPressedTime = System.currentTimeMillis();
+    }
+
+    public void showAd(){
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-2026382780923969/6687203176");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                if(mInterstitialAd.isLoaded()){
+                    mInterstitialAd.show();
+                }
+            }
+        });
     }
 }
 
