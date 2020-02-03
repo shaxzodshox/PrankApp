@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="textSize">40sp</dimen>
-
+    <dimen name="textSize">60sp</dimen>
+    <dimen name="subtextSize">24sp</dimen>
+    <dimen name="small_img">230dp</dimen>
+    <dimen name="choose_img_btn">80dp</dimen>
+    <dimen name="btn_text">18sp</dimen>
+    <dimen name="count_txt_size">240sp</dimen>
+    <dimen name="settings_txt">14sp</dimen>
+    <dimen name="settings_padding">16dp</dimen>
+    <dimen name="settings_txt_size">20sp</dimen>
 </resources>

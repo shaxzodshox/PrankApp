@@ -2,5 +2,10 @@
     <string name="app_name">ScaryPrank</string>
     <string name="ogohlik">Ushbu o\'yin 13 yoshdan kichkinalarga, xomilador ayollarga va yuragi
     bo\'sh insonlarga tavsiya etilmaydi. Ushbu dastur xazil tariqasida ishlab chiqarilgan.
+        \nUshbu prank ba\'zi yangi model telefonlarda qo\'yilgan ximoyasi tufayli ishlamasligi mumkin!
+    </string>
+    <string name="firstlaunch">
+         Bu dastur xazil tariqasida ishlab chiqarilgan.
+        \nUshbu prank ba\'zi yangi model telefonlarda qo\'yilgan ximoyasi tufayli ishlamasligi mumkin!
     </string>
 </resources>

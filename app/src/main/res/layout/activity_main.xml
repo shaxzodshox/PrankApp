@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
             android:fontFamily="@font/dark"
-            android:textSize="24sp"
+            android:textSize="@dimen/subtextSize"
             android:layout_centerHorizontal="true"
             android:text="RASM TANLANG"
             android:layout_below="@id/title"
@@ -42,7 +42,7 @@
         <LinearLayout
             android:id="@+id/imageContent"
             android:layout_width="match_parent"
-            android:layout_height="230dp"
+            android:layout_height="@dimen/small_img"
             android:layout_below="@id/rasmTanlang"
             android:layout_marginTop="12dp"
             android:gravity="center_vertical|center_horizontal"
@@ -50,8 +50,8 @@
 
             <Button
                 android:id="@+id/prevBtn"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="@dimen/choose_img_btn"
+                android:layout_height="@dimen/choose_img_btn"
                 android:background="@drawable/left_click"
                 android:layout_marginEnd="16dp"
                 />
@@ -68,8 +68,8 @@
 
             <Button
                 android:id="@+id/nextBtn"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="@dimen/choose_img_btn"
+                android:layout_height="@dimen/choose_img_btn"
                 android:background="@drawable/right_click"
                 android:layout_marginStart="16dp"
                 />
@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
             android:fontFamily="@font/dark"
-            android:textSize="24sp"
+            android:textSize="@dimen/subtextSize"
             android:layout_centerHorizontal="true"
             android:text="VAQTNI TANLANG"
             android:layout_below="@id/imageContent"
@@ -105,6 +105,7 @@
             android:layout_below="@id/spinner1"
             android:orientation="horizontal"
             android:layout_margin="16dp"
+            android:layout_above="@id/adView"
             >
             <ImageView
                 android:id="@+id/settingsBtn"
@@ -125,7 +126,7 @@
                 android:text="OGOHLANTIRISH"
                 android:onClick="showInfo"
                 android:background="@android:drawable/btn_default"
-                android:textSize="18sp" />
+                android:textSize="@dimen/btn_text" />
 
             <Button
                 android:id="@+id/playBtn"
@@ -136,7 +137,7 @@
                 android:drawableEnd="@drawable/ic_play_circle_filled_black_24dp"
                 android:fontFamily="@font/nightmare"
                 android:textColor="#cc3300"
-                android:textSize="18sp"
+                android:textSize="@dimen/btn_text"
                 android:text="BOSHLASH" />
         </LinearLayout>
         <com.google.android.gms.ads.AdView
@@ -147,7 +148,7 @@
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
             ads:adSize="SMART_BANNER"
-            ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+            ads:adUnitId="ca-app-pub-2026382780923969/6606531874">
         </com.google.android.gms.ads.AdView>
 
     </RelativeLayout>
@@ -157,7 +158,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:textSize="240sp"
+        android:textSize="@dimen/count_txt_size"
         android:text="3"
         android:textColor="#FFFFFF"
         android:fontFamily="@font/damned"

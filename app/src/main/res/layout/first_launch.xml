@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/firstLaunchLayout"
+        android:background="#1B1B1D"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:layout_centerInParent="true"
+        >
+
+        <ImageView
+            android:id="@+id/closeBtn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_close_black_24dp"
+            android:layout_alignParentEnd="true"
+            />
+        <ImageView
+            android:id="@+id/warning"
+            android:layout_marginTop="10dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/phone"
+            android:layout_centerHorizontal="true"
+            />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OGOHLANTIRISH"
+            android:textColor="#FFFFFF"
+            android:layout_below="@id/warning"
+            android:layout_centerHorizontal="true"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title"
+            android:text="@string/firstlaunch"
+            android:textSize="18sp"
+            android:textColor="#fff"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            />
+
+    </RelativeLayout>
+</LinearLayout>

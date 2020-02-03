@@ -27,10 +27,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.tapadoo.alerter.Alerter;
 
 import java.util.ArrayList;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity
     private long backPressedTime;
 
     boolean isMusicActive = true;
+    boolean isFirstLaunch = true;
 
     private Button prevBtn, nextBtn, playBtn;
     private ImageView horror_img;
@@ -86,6 +88,17 @@ public class MainActivity extends AppCompatActivity
 
         initListeners();
 
+        //check first time launch
+        SharedPreferences preferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        isFirstLaunch = preferences.getBoolean("first_launch",true);
+
+        if(isFirstLaunch){
+            firstLaunchAlert();
+        }
+
+
+        showBannerAd();
+
         getSettings();
 
         horror_img.setImageResource(horror_images[image_counter]);
@@ -98,6 +111,44 @@ public class MainActivity extends AppCompatActivity
 
         initArrayList(); //Initialize array list for spinner
 
+    }
+
+    private void firstLaunchAlert() {
+        mainLayout.setAlpha(0.5f);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        View mView = getLayoutInflater().inflate(R.layout.first_launch, null);
+
+        ImageView closeBtn = mView.findViewById(R.id.closeBtn);
+
+
+        builder.setView(mView);
+
+        final AlertDialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
+
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainLayout.setAlpha(1);
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
+        SharedPreferences prefs = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean("first_launch", false);
+        editor.apply();
+    }
+
+    private void showBannerAd() {
+        //banner ad
+        AdView mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 
     private void initListeners() {
@@ -362,10 +413,13 @@ public class MainActivity extends AppCompatActivity
                         .setIcon(R.drawable.phone)//if you don't write this line of code there will be icon of the bell
                         .show();
 
-                CountDownTimer startTimer = new CountDownTimer(4500,1000) {
+                CountDownTimer startTimer = new CountDownTimer(3500,1000) {
                     @Override
                     public void onTick(long millisUntilFinished) {
                         countStart--;
+                        if(countStart == -1){
+                            countStart = 0;
+                        }
                         startCountView.setText(String.valueOf(countStart));
 
                         YoYo.with(Techniques.ZoomIn)
@@ -382,6 +436,7 @@ public class MainActivity extends AppCompatActivity
 
                             @Override
                             public void onFinish() {
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
                                 //Toasty.success(MainActivity.this, "DONE", Toast.LENGTH_SHORT).show();
                             }
