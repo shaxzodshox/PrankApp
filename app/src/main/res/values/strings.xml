@@ -1,11 +1,12 @@
 <resources>
-    <string name="app_name">Daxshatli prank</string>
+    <string name="app_name">Prank Uzbek</string>
     <string name="ogohlik">Ushbu o\'yin 13 yoshdan kichkinalarga, xomilador ayollarga va yuragi
     bo\'sh insonlarga tavsiya etilmaydi. Ushbu dastur xazil tariqasida ishlab chiqarilgan.
-        \nUshbu prank ba\'zi yangi model telefonlarda qo\'yilgan ximoyasi tufayli ishlamasligi mumkin!
     </string>
     <string name="firstlaunch">
          Bu dastur xazil tariqasida ishlab chiqarilgan.
-        \nUshbu prank ba\'zi yangi model telefonlarda qo\'yilgan ximoyasi tufayli ishlamasligi mumkin!
+\nRasm va vaqtni tanlang, boshlash tugmasini bosing va uni qo\'rqitmoqchi bo\'lgan kishiga bering va bu ajoyib o\'yin ekanligini ayting. Yaqiningiz o\'yin o\'ynab turganida, sharpa to\'satdan va kutilmaganda baland ovozda dahshatli qichqiriq bilan birga chiqib keladi.
+        \n\nUshbu o\'yin 13 yoshdan kichkinalarga, xomilador ayollarga va yuragi
+    bo\'sh insonlarga tavsiya etilmaydi.
     </string>
 </resources>

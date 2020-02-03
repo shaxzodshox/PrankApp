@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity
 
         initViews(); //Initialize views
 
-        showAd(); //show Interstitial Ad
+
 
         initListeners();
 
@@ -102,8 +102,8 @@ public class MainActivity extends AppCompatActivity
             firstLaunchAlert();
         }
 
-
-        showBannerAd();
+        //showAd(); //show Interstitial Ad
+        //showBannerAd();
 
         getSettings();
 
@@ -186,7 +186,6 @@ public class MainActivity extends AppCompatActivity
         customList.add(new CustomItems("30 sekund"));
         customList.add(new CustomItems("45 sekund"));
         customList.add(new CustomItems("1 daqiqa"));
-        customList.add(new CustomItems("2 daqiqa"));
         CustomAdapter customAdapter = new CustomAdapter(MainActivity.this, customList);
 
         if (mySpinner != null) {
@@ -216,9 +215,7 @@ public class MainActivity extends AppCompatActivity
         timer = Integer.parseInt(numberOnly);
         if (timer == 1) { //choosen 1 minute
             timer = 60000; //60 seconds
-        } else if (timer == 2) { //choosen 2 minute
-            timer = 120000; //120 seconds
-        } else {
+        }  else {
             timer *= 1000; //if choosen 10 seconds then 10 * 1000 = 10000
         }
         //Toast.makeText(getApplicationContext(),String.valueOf(timer),Toast.LENGTH_SHORT).show();
@@ -409,9 +406,6 @@ public class MainActivity extends AppCompatActivity
 
                 mainLayout2.setAlpha(0.3f);
 
-                final Intent intent = new Intent(MainActivity.this, scaryActivity.class);
-                intent.putExtra("image", image_counter);
-
                 Alerter.create(MainActivity.this)
                         .setTitle("Prank boshlanmoqda")
                         .setText("Telefoningizni yaqinlaringizga bering...")
@@ -434,23 +428,11 @@ public class MainActivity extends AppCompatActivity
                     }
                     @Override
                     public void onFinish() {
-
-                        countDownTimer = new CountDownTimer(timer, 1000) {
-                            @Override
-                            public void onTick(long millisUntilFinished) {
-                            }
-
-                            @Override
-                            public void onFinish() {
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(intent);
-                                //Toasty.success(MainActivity.this, "DONE", Toast.LENGTH_SHORT).show();
-                            }
-                        };
-                        countDownTimer.start();
-
-                        countStart = 4;
-                        MainActivity.super.onBackPressed();
+                        final Intent intent = new Intent(MainActivity.this, GameActivity.class);
+                        intent.putExtra("image", image_counter);
+                        intent.putExtra("time",timer);
+                        startActivity(intent);
+                        MainActivity.this.finish();
                     }
                 }; startTimer.start();
                 break;

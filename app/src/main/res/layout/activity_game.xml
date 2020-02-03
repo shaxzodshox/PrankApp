@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_game"
+    tools:context=".GameActivity">
+
+    <RelativeLayout
+        android:id="@+id/questionLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/question_bgH"
+        android:layout_margin="30dp"
+        android:background="@drawable/white_bg"
+        >
+
+        <TextView
+            android:id="@+id/questionView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/boogaloo"
+            android:gravity="center"
+            android:text="Question view"
+            android:textAlignment="center"
+            android:textColor="#fff"
+            android:textSize="@dimen/question_txt_size"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_below="@id/questionLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <Button
+                android:background="@drawable/option_click"
+                android:id="@+id/tv_option1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:fontFamily="@font/boogaloo"
+                android:text="OPTION1"
+                android:textAlignment="center"
+                android:textSize="@dimen/option_txt"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            >
+            <Button
+                android:background="@drawable/option_click"
+                android:id="@+id/tv_option2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="OPTION2"
+                android:textAlignment="center"
+                android:textSize="@dimen/option_txt"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:fontFamily="@font/boogaloo"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            >
+            <Button
+                android:background="@drawable/option_click"
+                android:id="@+id/tv_option3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="OPTION3"
+                android:textAlignment="center"
+                android:textSize="@dimen/option_txt"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:fontFamily="@font/boogaloo"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            >
+            <Button
+                android:background="@drawable/option_click"
+                android:id="@+id/tv_option4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="OPTION4"
+                android:textAlignment="center"
+                android:textSize="@dimen/option_txt"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:fontFamily="@font/boogaloo"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -9,4 +9,9 @@
     <dimen name="settings_txt">12sp</dimen>
     <dimen name="settings_padding">10dp</dimen>
     <dimen name="settings_txt_size">16sp</dimen>
+    <dimen name="question_bgH">140dp</dimen>
+    <dimen name="question_txt_size">16sp</dimen>
+    <dimen name="option_txt">12sp</dimen>
+    <dimen name="first_launch_title">16sp</dimen>
+    <dimen name="first_launch_subtitle">12sp</dimen>
 </resources>
