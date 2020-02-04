@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.REORDER_TASKS" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <supports-screens
         android:largeScreens="true"
@@ -23,7 +24,8 @@
         <activity android:name=".GameActivity"></activity>
         <activity
             android:name=".scaryActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"

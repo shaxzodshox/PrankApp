@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -90,8 +91,6 @@ public class MainActivity extends AppCompatActivity
 
         initViews(); //Initialize views
 
-
-
         initListeners();
 
         //check first time launch
@@ -102,8 +101,8 @@ public class MainActivity extends AppCompatActivity
             firstLaunchAlert();
         }
 
-        //showAd(); //show Interstitial Ad
-        //showBannerAd();
+        showAd(); //show Interstitial Ad
+        showBannerAd(); //show Banner Ad
 
         getSettings();
 
@@ -120,7 +119,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void firstLaunchAlert() {
-        mainLayout.setAlpha(0.5f);
+        mainLayout.animate().alpha(0.5f).setDuration(800);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         View mView = getLayoutInflater().inflate(R.layout.first_launch, null);
@@ -132,13 +131,14 @@ public class MainActivity extends AppCompatActivity
 
         final AlertDialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
 
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
 
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainLayout.setAlpha(1);
+                mainLayout.animate().alpha(1).setDuration(800);
                 dialog.dismiss();
             }
         });
@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity
         playBtn = findViewById(R.id.playBtn);
         startCountView = findViewById(R.id.startCount);
 
-        bgMusic = MediaPlayer.create(MainActivity.this, R.raw.horror_bg);
+        bgMusic = MediaPlayer.create(MainActivity.this, R.raw.theme);
     }
 
     @Override
@@ -227,25 +227,25 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void showInfo(View view) {
-        mainLayout.setAlpha(0.5f);
+        mainLayout.animate().alpha(0.5f).setDuration(800);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         View mView = getLayoutInflater().inflate(R.layout.ogohlantirish, null);
 
         ImageView closeBtn = mView.findViewById(R.id.closeBtn);
 
-
         builder.setView(mView);
 
         final AlertDialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
 
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
 
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainLayout.setAlpha(1);
+                mainLayout.animate().alpha(1).setDuration(800);
                 dialog.dismiss();
             }
         });
@@ -256,7 +256,7 @@ public class MainActivity extends AppCompatActivity
     public void showSettings(View view) {
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
-        mainLayout.setAlpha(0.7f);
+        mainLayout.animate().alpha(0.7f).setDuration(800);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         View mView = getLayoutInflater().inflate(R.layout.settings, null);
@@ -278,13 +278,14 @@ public class MainActivity extends AppCompatActivity
 
         final AlertDialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
 
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
 
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainLayout.setAlpha(1);
+                mainLayout.animate().alpha(1).setDuration(800);
                 dialog.dismiss();
             }
         });
@@ -309,7 +310,7 @@ public class MainActivity extends AppCompatActivity
                 editor.putBoolean("bg_music", isMusicActive);
                 editor.apply();
 
-                mainLayout.setAlpha(1);
+                mainLayout.animate().alpha(1).setDuration(800);
                 dialog.dismiss();
             }
         });
@@ -455,6 +456,7 @@ public class MainActivity extends AppCompatActivity
 
         backPressedTime = System.currentTimeMillis();
     }
+
 
     public void showAd(){
         mInterstitialAd = new InterstitialAd(this);
